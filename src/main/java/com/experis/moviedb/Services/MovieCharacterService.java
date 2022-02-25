@@ -13,7 +13,15 @@ public class MovieCharacterService {
     @Autowired
     private MovieCharacterRepository characterRepository;
 
-    public List<MovieCharacter> getAll() {
+    public List<MovieCharacter> findAll() {
         return characterRepository.findAll();
+    }
+
+    public MovieCharacter getCharacterById(Long id) {
+        return characterRepository.findById(id).get();
+    }
+
+    public MovieCharacter saveOrUpdate(MovieCharacter character) {
+        return characterRepository.save(character);
     }
 }

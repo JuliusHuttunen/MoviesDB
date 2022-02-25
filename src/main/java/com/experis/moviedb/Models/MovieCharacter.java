@@ -6,21 +6,14 @@ import javax.persistence.*;
 public class MovieCharacter {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String alias;
     private String gender;
     private String linkToPhoto;
 
-    public MovieCharacter() {}
-
-    public MovieCharacter(Long id, String name, String alias, String gender, String linkToPhoto) {
-        this.id = id;
-        this.name = name;
-        this.alias = alias;
-        this.gender = gender;
-        this.linkToPhoto = linkToPhoto;
+    public MovieCharacter() {
     }
 
     public Long getId() {
