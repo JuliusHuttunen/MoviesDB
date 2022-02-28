@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieFranchiseService {
@@ -17,8 +18,8 @@ public class MovieFranchiseService {
         return franchiseRepository.findAll();
     }
 
-    public MovieFranchise getFranchiseById(Long id) {
-        return franchiseRepository.findById(id).get();
+    public Optional<MovieFranchise> getFranchiseById(Long id) {
+        return franchiseRepository.findById(id);
     }
 
     public MovieFranchise saveFranchise(MovieFranchise franchise) {
@@ -26,7 +27,7 @@ public class MovieFranchiseService {
     }
 
     public MovieFranchise updateFranchise(MovieFranchise updateFranchise) {
-        MovieFranchise franchise = getFranchiseById(updateFranchise.getId());
+        MovieFranchise franchise = getFranchiseById(updateFranchise.getId()).get();
         franchise.setId(updateFranchise.getId());
         franchise.setName(updateFranchise.getName());
         franchise.setDescription(updateFranchise.getDescription());
