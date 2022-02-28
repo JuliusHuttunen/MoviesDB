@@ -1,6 +1,10 @@
 package com.experis.moviedb.Models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Movie {
@@ -8,12 +12,33 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
     private String title;
+
+    @Column
     private String genre;
+
+    @Column
     private int releaseYear;
+
+    @Column
     private String director;
+
+    @Column
     private String picture;
+
+    @Column
     private String linkToTrailer;
+
+    @JsonGetter("franchise")
+    public String franchise() {
+        return "/api/franchises/" + franchise.getId();
+    }
+
+    @ManyToOne
+    @JoinColumn(name="franchise_id")
+    private MovieFranchise franchise;
 
     public Movie() {
     }
@@ -72,5 +97,13 @@ public class Movie {
 
     public void setLinkToTrailer(String linkToTrailer) {
         this.linkToTrailer = linkToTrailer;
+    }
+
+    public MovieFranchise getFranchise() {
+        return franchise;
+    }
+
+    public void setFranchise(MovieFranchise franchise) {
+        this.franchise = franchise;
     }
 }

@@ -8,9 +8,17 @@ public class MovieCharacter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
     private String name;
+
+    @Column
     private String alias;
+
+    @Column
     private String gender;
+
+    @Column
     private String linkToPhoto;
 
     public MovieCharacter() {
