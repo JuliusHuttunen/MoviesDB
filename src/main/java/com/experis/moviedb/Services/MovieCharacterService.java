@@ -21,7 +21,22 @@ public class MovieCharacterService {
         return characterRepository.findById(id).get();
     }
 
-    public MovieCharacter saveOrUpdate(MovieCharacter character) {
+    public MovieCharacter saveCharacter(MovieCharacter character) {
         return characterRepository.save(character);
+    }
+
+    public MovieCharacter updateCharacter(MovieCharacter updateCharacter) {
+        MovieCharacter character = getCharacterById(updateCharacter.getId());
+        character.setId(updateCharacter.getId());
+        character.setName(updateCharacter.getName());
+        character.setAlias(updateCharacter.getAlias());
+        character.setGender(updateCharacter.getGender());
+        character.setLinkToPhoto(updateCharacter.getLinkToPhoto());
+        return characterRepository.save(character);
+    }
+
+    public Boolean deleteCharacter(Long id) {
+        characterRepository.deleteById(id);
+        return true;
     }
 }

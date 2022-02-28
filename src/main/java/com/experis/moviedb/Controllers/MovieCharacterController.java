@@ -25,7 +25,19 @@ public class MovieCharacterController {
 
     @PostMapping("/api/characters")
     private MovieCharacter createCharacter(@RequestBody MovieCharacter character) {
-        service.saveOrUpdate(character);
+        service.saveCharacter(character);
         return character;
+    }
+
+    @PutMapping ("api/characters/{id}")
+    private MovieCharacter updateCharacter(@RequestBody MovieCharacter updateCharacter, @PathVariable("id") Long id) {
+        updateCharacter.setId(id);
+        service.updateCharacter(updateCharacter);
+        return updateCharacter;
+    }
+
+    @DeleteMapping("api/characters/{id}")
+    private Boolean deleteCharacter(@PathVariable("id") Long id) {
+        return service.deleteCharacter(id);
     }
 }
