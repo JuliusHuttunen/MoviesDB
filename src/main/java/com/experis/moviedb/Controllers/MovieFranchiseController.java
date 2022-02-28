@@ -3,9 +3,12 @@ package com.experis.moviedb.Controllers;
 import com.experis.moviedb.Models.MovieFranchise;
 import com.experis.moviedb.Services.MovieFranchiseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin (origins = "*")
@@ -16,30 +19,53 @@ public class MovieFranchiseController {
     MovieFranchiseService service;
 
     @GetMapping("")
-    private List<MovieFranchise> getFranchises() {
-        return service.findAll();
+    private ResponseEntity<List<MovieFranchise>> getFranchises() {
+        List<MovieFranchise> franchises = service.findAll();
+        if (!franchises.isEmpty())
+            return ResponseEntity
+                    .ok()
+                    .body(franchises);
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .header("Message", "No franchises found!")
+                .build();
     }
 
     @GetMapping("/{id}")
-    private MovieFranchise getMovieFranchise(@PathVariable("id") Long id) {
-        return service.getFranchiseById(id);
+    private ResponseEntity<MovieFranchise> getMovieFranchise(@PathVariable("id") Long id) {
+        Optional<MovieFranchise> franchise =  service.getFranchiseById(id);
+        if (franchise.isPresent())
+            return ResponseEntity
+                    .ok()
+                    .body(franchise.get());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .header("Message", "Franchise not found!")
+                .build();
     }
 
     @PostMapping("")
-    private MovieFranchise createFranchise(@RequestBody MovieFranchise franchise) {
+    private ResponseEntity<MovieFranchise> createFranchise(@RequestBody MovieFranchise franchise) {
         service.saveFranchise(franchise);
-        return franchise;
+        return ResponseEntity
+                .ok()
+                .body(franchise);
     }
 
     @PutMapping ("/{id}")
-    private MovieFranchise updateFranchise(@RequestBody MovieFranchise updateFranchise, @PathVariable("id") Long id) {
+    private ResponseEntity<MovieFranchise> updateFranchise(@RequestBody MovieFranchise updateFranchise, @PathVariable("id") Long id) {
         updateFranchise.setId(id);
         service.updateFranchise(updateFranchise);
-        return updateFranchise;
+        return ResponseEntity
+                .ok()
+                .body(updateFranchise);
     }
 
     @DeleteMapping("/{id}")
-    private Boolean deleteFranchise(@PathVariable("id") Long id) {
-        return service.deleteFranchise(id);
+    private ResponseEntity<Boolean> deleteFranchise(@PathVariable("id") Long id) {
+        boolean result = service.deleteFranchise(id);
+        return ResponseEntity
+                .ok()
+                .body(result);
     }
 }

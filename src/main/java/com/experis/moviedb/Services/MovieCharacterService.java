@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieCharacterService {
@@ -17,8 +18,8 @@ public class MovieCharacterService {
         return characterRepository.findAll();
     }
 
-    public MovieCharacter getCharacterById(Long id) {
-        return characterRepository.findById(id).get();
+    public Optional<MovieCharacter> getCharacterById(Long id) {
+        return characterRepository.findById(id);
     }
 
     public MovieCharacter saveCharacter(MovieCharacter character) {
@@ -26,7 +27,7 @@ public class MovieCharacterService {
     }
 
     public MovieCharacter updateCharacter(MovieCharacter updateCharacter) {
-        MovieCharacter character = getCharacterById(updateCharacter.getId());
+        MovieCharacter character = getCharacterById(updateCharacter.getId()).get();
         character.setId(updateCharacter.getId());
         character.setName(updateCharacter.getName());
         character.setAlias(updateCharacter.getAlias());
