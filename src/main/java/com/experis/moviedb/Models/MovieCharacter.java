@@ -1,6 +1,11 @@
 package com.experis.moviedb.Models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class MovieCharacter {
@@ -20,6 +25,17 @@ public class MovieCharacter {
 
     @Column
     private String linkToPhoto;
+
+    @JsonGetter("movies")
+    public List<String> movies() {
+        return movies.stream()
+                .map(movie -> {
+                    return "/api/movies/" + movie.getId();
+                }).collect(Collectors.toList());
+    }
+
+    @ManyToMany(mappedBy = "characters")
+    private Set<Movie> movies;
 
     public MovieCharacter() {
     }
@@ -62,5 +78,13 @@ public class MovieCharacter {
 
     public void setLinkToPhoto(String linkToPhoto) {
         this.linkToPhoto = linkToPhoto;
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
     }
 }

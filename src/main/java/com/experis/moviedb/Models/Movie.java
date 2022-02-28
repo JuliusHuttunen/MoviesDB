@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -39,6 +40,22 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name="franchise_id")
     private MovieFranchise franchise;
+
+    @JsonGetter("characters")
+    public List<String> characters() {
+        return characters.stream()
+                .map(character -> {
+                    return "/api/characters/" + character.getId();
+                }).collect(Collectors.toList());
+    }
+
+    @ManyToMany
+    @JoinTable(
+            name = "character_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_character_id")
+    )
+    private Set<MovieCharacter> characters;
 
     public Movie() {
     }
@@ -105,5 +122,13 @@ public class Movie {
 
     public void setFranchise(MovieFranchise franchise) {
         this.franchise = franchise;
+    }
+
+    public Set<MovieCharacter> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(Set<MovieCharacter> characters) {
+        this.characters = characters;
     }
 }
