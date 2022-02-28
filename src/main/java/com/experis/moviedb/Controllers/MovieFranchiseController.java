@@ -3,10 +3,7 @@ package com.experis.moviedb.Controllers;
 import com.experis.moviedb.Models.MovieFranchise;
 import com.experis.moviedb.Services.MovieFranchiseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +23,21 @@ public class MovieFranchiseController {
         return service.getFranchiseById(id);
     }
 
+    @PostMapping("/api/franchises")
+    private MovieFranchise createFranchise(@RequestBody MovieFranchise franchise) {
+        service.saveFranchise(franchise);
+        return franchise;
+    }
 
+    @PutMapping ("api/franchises/{id}")
+    private MovieFranchise updateFranchise(@RequestBody MovieFranchise updateFranchise, @PathVariable("id") Long id) {
+        updateFranchise.setId(id);
+        service.updateFranchise(updateFranchise);
+        return updateFranchise;
+    }
+
+    @DeleteMapping("api/franchises/{id}")
+    private Boolean deleteFranchise(@PathVariable("id") Long id) {
+        return service.deleteFranchise(id);
+    }
 }

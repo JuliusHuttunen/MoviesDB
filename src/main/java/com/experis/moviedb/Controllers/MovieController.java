@@ -18,14 +18,26 @@ public class MovieController {
         return service.findAll();
     }
 
-    @GetMapping("/api/movies/{id")
-    private Movie getMovie(@PathVariable("i") Long id) {
+    @GetMapping("/api/movies/{id}")
+    private Movie getMovie(@PathVariable("id") Long id) {
         return service.getMovieById(id);
     }
 
     @PostMapping("/api/movies")
     private Movie createMovie(@RequestBody Movie movie) {
-        service.saveOrUpdate(movie);
+        service.saveMovie(movie);
         return movie;
+    }
+
+    @PutMapping ("api/movies/{id}")
+    private Movie updateMovie(@RequestBody Movie updateMovie, @PathVariable("id") Long id) {
+        updateMovie.setId(id);
+        service.updateMovie(updateMovie);
+        return updateMovie;
+    }
+
+    @DeleteMapping("api/movies/{id}")
+    private Boolean deleteMovie(@PathVariable("id") Long id) {
+        return service.deleteMovie(id);
     }
 }

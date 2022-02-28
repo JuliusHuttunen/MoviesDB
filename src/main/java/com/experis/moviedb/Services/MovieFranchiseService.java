@@ -20,4 +20,21 @@ public class MovieFranchiseService {
     public MovieFranchise getFranchiseById(Long id) {
         return franchiseRepository.findById(id).get();
     }
+
+    public MovieFranchise saveFranchise(MovieFranchise franchise) {
+        return franchiseRepository.save(franchise);
+    }
+
+    public MovieFranchise updateFranchise(MovieFranchise updateFranchise) {
+        MovieFranchise franchise = getFranchiseById(updateFranchise.getId());
+        franchise.setId(updateFranchise.getId());
+        franchise.setName(updateFranchise.getName());
+        franchise.setDescription(updateFranchise.getDescription());
+        return franchiseRepository.save(franchise);
+    }
+
+    public Boolean deleteFranchise(Long id) {
+        franchiseRepository.deleteById(id);
+        return true;
+    }
 }
