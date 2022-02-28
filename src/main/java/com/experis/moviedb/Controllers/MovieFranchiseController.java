@@ -8,35 +8,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin (origins = "*")
+@RequestMapping("/api/franchises")
 public class MovieFranchiseController {
 
     @Autowired
     MovieFranchiseService service;
 
-    @GetMapping("/api/franchises")
+    @GetMapping("")
     private List<MovieFranchise> getFranchises() {
         return service.findAll();
     }
 
-    @GetMapping("api/franchises/{id}")
+    @GetMapping("/{id}")
     private MovieFranchise getMovieFranchise(@PathVariable("id") Long id) {
         return service.getFranchiseById(id);
     }
 
-    @PostMapping("/api/franchises")
+    @PostMapping("")
     private MovieFranchise createFranchise(@RequestBody MovieFranchise franchise) {
         service.saveFranchise(franchise);
         return franchise;
     }
 
-    @PutMapping ("api/franchises/{id}")
+    @PutMapping ("/{id}")
     private MovieFranchise updateFranchise(@RequestBody MovieFranchise updateFranchise, @PathVariable("id") Long id) {
         updateFranchise.setId(id);
         service.updateFranchise(updateFranchise);
         return updateFranchise;
     }
 
-    @DeleteMapping("api/franchises/{id}")
+    @DeleteMapping("/{id}")
     private Boolean deleteFranchise(@PathVariable("id") Long id) {
         return service.deleteFranchise(id);
     }

@@ -8,35 +8,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/api/movies")
 public class MovieController {
 
     @Autowired
     MovieService service = new MovieService();
 
-    @GetMapping("/api/movies")
+    @GetMapping("")
     private List<Movie> getMovies() {
         return service.findAll();
     }
 
-    @GetMapping("/api/movies/{id}")
+    @GetMapping("/{id}")
     private Movie getMovie(@PathVariable("id") Long id) {
         return service.getMovieById(id);
     }
 
-    @PostMapping("/api/movies")
+    @PostMapping("")
     private Movie createMovie(@RequestBody Movie movie) {
         service.saveMovie(movie);
         return movie;
     }
 
-    @PutMapping ("api/movies/{id}")
+    @PutMapping ("/{id}")
     private Movie updateMovie(@RequestBody Movie updateMovie, @PathVariable("id") Long id) {
         updateMovie.setId(id);
         service.updateMovie(updateMovie);
         return updateMovie;
     }
 
-    @DeleteMapping("api/movies/{id}")
+    @DeleteMapping("/{id}")
     private Boolean deleteMovie(@PathVariable("id") Long id) {
         return service.deleteMovie(id);
     }
