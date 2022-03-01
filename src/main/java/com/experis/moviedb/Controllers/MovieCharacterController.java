@@ -80,6 +80,7 @@ public class MovieCharacterController {
             return ResponseEntity
                     .status(HttpStatus.NO_CONTENT)
                     .build();
+
         }
         catch (Exception e) {
             return ResponseEntity

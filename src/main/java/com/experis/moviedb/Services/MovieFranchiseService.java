@@ -1,12 +1,16 @@
 package com.experis.moviedb.Services;
 
+import com.experis.moviedb.Models.Movie;
+import com.experis.moviedb.Models.MovieCharacter;
 import com.experis.moviedb.Models.MovieFranchise;
 import com.experis.moviedb.Repositories.MovieFranchiseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class MovieFranchiseService {
@@ -37,5 +41,21 @@ public class MovieFranchiseService {
     public Boolean deleteFranchise(Long id) {
         franchiseRepository.deleteById(id);
         return true;
+    }
+
+    public List<Movie> getMoviesList(MovieFranchise franchise){
+        Set<Movie> movies = franchise.getMovies();
+        return movies.stream().toList();
+    }
+
+    public List<MovieCharacter> getCharacterList(MovieFranchise franchise){
+        Set<Movie> movies = franchise.getMovies();
+        Set<MovieCharacter> characters = new HashSet<>();
+        for (Movie m : movies){
+            for (MovieCharacter mc : m.getCharacters()){
+                characters.add(mc);
+            }
+        }
+        return characters.stream().toList();
     }
 }

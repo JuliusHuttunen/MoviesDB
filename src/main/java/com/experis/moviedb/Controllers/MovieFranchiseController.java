@@ -1,5 +1,7 @@
 package com.experis.moviedb.Controllers;
 
+import com.experis.moviedb.Models.Movie;
+import com.experis.moviedb.Models.MovieCharacter;
 import com.experis.moviedb.Models.MovieFranchise;
 import com.experis.moviedb.Services.MovieFranchiseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,5 +88,31 @@ public class MovieFranchiseController {
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .build();
         }
+    }
+
+    @GetMapping("/{id}/movies")
+    private ResponseEntity<List<Movie>> getFranchiseMovies(@PathVariable("id") Long id) {
+        MovieFranchise franchise = service.getFranchiseById(id).get();
+        List<Movie> moviesList = service.getMoviesList(franchise);
+        if (!moviesList.isEmpty())
+            return ResponseEntity
+                    .ok()
+                    .body(moviesList);
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .build();
+    }
+
+    @GetMapping("/{id}/characters")
+    private ResponseEntity<List<MovieCharacter>> getFranchiseCharacters(@PathVariable("id") Long id) {
+        MovieFranchise franchise = service.getFranchiseById(id).get();
+        List<MovieCharacter> characterList = service.getCharacterList(franchise);
+        if (!characterList.isEmpty())
+            return ResponseEntity
+                    .ok()
+                    .body(characterList);
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .build();
     }
 }
