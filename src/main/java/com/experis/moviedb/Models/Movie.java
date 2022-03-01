@@ -3,6 +3,7 @@ package com.experis.moviedb.Models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -55,12 +56,9 @@ public class Movie {
         return null;
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "character_movie",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_character_id")
-    )
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(name = "character_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "movie_character_id"))
+    @Valid
     private Set<MovieCharacter> characters;
 
     public Movie() {

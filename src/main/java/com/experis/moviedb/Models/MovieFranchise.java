@@ -30,7 +30,7 @@ public class MovieFranchise {
         return null;
     }
 
-    @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Movie> movies;
 
     public MovieFranchise(){}
