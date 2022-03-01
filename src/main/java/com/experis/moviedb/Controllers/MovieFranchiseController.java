@@ -115,4 +115,13 @@ public class MovieFranchiseController {
                 .status(HttpStatus.NOT_FOUND)
                 .build();
     }
+
+    @PutMapping("/{id}/movies")
+    private ResponseEntity<MovieFranchise> updateMovies(@PathVariable("id") Long id, @RequestBody Long[] ids){
+        MovieFranchise franchise = service.getFranchiseById(id).get();
+        MovieFranchise updated = service.updateFranchiseMovies(franchise, ids);
+        return ResponseEntity
+                .ok()
+                .body(updated);
+    }
 }

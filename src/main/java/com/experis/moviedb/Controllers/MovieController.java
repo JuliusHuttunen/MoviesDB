@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -100,5 +102,15 @@ public class MovieController {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .build();
+    }
+
+    @PutMapping("/{id}/characters")
+    private ResponseEntity<Movie> updateCharacters(@PathVariable("id") Long id, @RequestBody Long[] ids){
+        Movie movie = service.getMovieById(id).get();
+        Movie newMovie = service.updateMovieCharacters(movie, ids);
+
+        return ResponseEntity
+                .ok()
+                .body(newMovie);
     }
 }

@@ -2,10 +2,12 @@ package com.experis.moviedb.Services;
 
 import com.experis.moviedb.Models.Movie;
 import com.experis.moviedb.Models.MovieCharacter;
+import com.experis.moviedb.Repositories.MovieCharacterRepository;
 import com.experis.moviedb.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -15,6 +17,9 @@ public class MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieCharacterRepository characterRepository;
 
     public List<Movie> findAll() {
         return movieRepository.findAll();
@@ -49,5 +54,15 @@ public class MovieService {
         Set<MovieCharacter> characters = movie.getCharacters();
         List<MovieCharacter> characterList = characters.stream().toList();
         return characterList;
+    }
+
+    public Movie updateMovieCharacters(Movie movie, Long[] ids) {
+        Set<MovieCharacter> characters = new HashSet<>();
+        for (Long charId : ids) {
+            MovieCharacter byId = characterRepository.findById(charId).get();
+            characters.add(byId);
+        }
+        movie.setCharacters(characters);
+        return movieRepository.save(movie);
     }
 }
