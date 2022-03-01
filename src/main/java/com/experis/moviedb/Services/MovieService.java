@@ -63,6 +63,7 @@ public class MovieService {
             characters.add(byId);
         }
         movie.setCharacters(characters);
-        return movieRepository.save(movie);
+        movieRepository.save(movie);
+        return movie;
     }
 }

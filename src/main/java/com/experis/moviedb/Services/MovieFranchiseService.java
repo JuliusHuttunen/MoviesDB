@@ -69,6 +69,7 @@ public class MovieFranchiseService {
             byId.setFranchise(franchise);
             movieRepository.save(byId);
         }
-        return franchiseRepository.save(franchise);
+        franchiseRepository.save(franchise);
+        return franchise;
     }
 }
