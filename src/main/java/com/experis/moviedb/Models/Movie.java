@@ -46,10 +46,13 @@ public class Movie {
 
     @JsonGetter("characters")
     public List<String> characters() {
-        return characters.stream()
-                .map(character -> {
-                    return "/api/characters/" + character.getId();
-                }).collect(Collectors.toList());
+        if(characters != null) {
+            return characters.stream()
+                    .map(character -> {
+                        return "/api/characters/" + character.getId();
+                    }).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @ManyToMany

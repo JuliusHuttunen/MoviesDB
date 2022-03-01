@@ -28,10 +28,13 @@ public class MovieCharacter {
 
     @JsonGetter("movies")
     public List<String> movies() {
-        return movies.stream()
-                .map(movie -> {
-                    return "/api/movies/" + movie.getId();
-                }).collect(Collectors.toList());
+        if (movies != null) {
+            return movies.stream()
+                    .map(movie -> {
+                        return "/api/movies/" + movie.getId();
+                    }).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @ManyToMany(mappedBy = "characters")

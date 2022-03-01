@@ -26,7 +26,7 @@ public class RelationController {
     @Autowired
     MovieFranchiseRepository franchiseRepository;
 
-    @PutMapping("/movies/{id}/characters/update")
+    @PutMapping("/movies/{id}/characters")
     private ResponseEntity<Movie> updateCharacters(@PathVariable("id") Long id, @RequestBody Long[] ids){
         Movie movie = movieRepository.findById(id).get();
         Set<MovieCharacter> characters = new HashSet<>();
@@ -41,7 +41,7 @@ public class RelationController {
                 .body(movie);
     }
 
-    @PutMapping("/franchises/{id}/movies/update")
+    @PutMapping("/franchises/{id}/movies")
     private ResponseEntity<MovieFranchise> updateMovies(@PathVariable("id") Long id, @RequestBody Long[] ids){
         MovieFranchise franchise = franchiseRepository.findById(id).get();
         for (Long charId : ids) {

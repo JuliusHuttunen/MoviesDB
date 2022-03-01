@@ -3,7 +3,6 @@ package com.experis.moviedb.Models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,10 +21,13 @@ public class MovieFranchise {
 
     @JsonGetter("movies")
     public List<String> movies() {
-        return movies.stream()
-                .map(movie -> {
-                    return "/api/movies/" + movie.getId();
-                }).collect(Collectors.toList());
+        if(movies != null) {
+            return movies.stream()
+                    .map(movie -> {
+                        return "/api/movies/" + movie.getId();
+                    }).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY)
