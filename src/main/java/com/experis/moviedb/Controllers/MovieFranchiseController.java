@@ -27,7 +27,6 @@ public class MovieFranchiseController {
                     .body(franchises);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .header("Message", "No franchises found!")
                 .build();
     }
 
@@ -40,32 +39,52 @@ public class MovieFranchiseController {
                     .body(franchise.get());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .header("Message", "Franchise not found!")
                 .build();
     }
 
     @PostMapping("")
     private ResponseEntity<MovieFranchise> createFranchise(@RequestBody MovieFranchise franchise) {
-        service.saveFranchise(franchise);
-        return ResponseEntity
-                .ok()
-                .body(franchise);
+        try {
+            MovieFranchise result = service.saveFranchise(franchise);
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(franchise);
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
     @PutMapping ("/{id}")
     private ResponseEntity<MovieFranchise> updateFranchise(@RequestBody MovieFranchise updateFranchise, @PathVariable("id") Long id) {
-        updateFranchise.setId(id);
-        service.updateFranchise(updateFranchise);
-        return ResponseEntity
-                .ok()
-                .body(updateFranchise);
+        try {
+            updateFranchise.setId(id);
+            service.updateFranchise(updateFranchise);
+            return ResponseEntity
+                    .ok()
+                    .body(updateFranchise);
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
     @DeleteMapping("/{id}")
     private ResponseEntity<Boolean> deleteFranchise(@PathVariable("id") Long id) {
-        boolean result = service.deleteFranchise(id);
-        return ResponseEntity
-                .ok()
-                .body(result);
+        try {
+            service.deleteFranchise(id);
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .build();
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 }
