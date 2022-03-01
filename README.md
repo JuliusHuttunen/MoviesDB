@@ -26,7 +26,7 @@ Run the project with a compatible IDE of your choice. May need some work to get 
 
 ## API
 
-Swagger/OpenAPI documentation at endpoint ``/api/docs``. 
+Swagger/OpenAPI documentation at endpoint ``/api/docs``. Use the query ``/api-docs`` on the search/explore bar.
 
 Note: Swagger displays relational data as strings, which isn't true in the context of the program. When making 
 POST or PUT requests it's better to just leave relational data ``null`` and update the data later, as relational data has dedicated endpoint mappings for updating.
