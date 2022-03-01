@@ -4,6 +4,7 @@ import com.experis.moviedb.Models.Movie;
 import com.experis.moviedb.Models.MovieCharacter;
 import com.experis.moviedb.Models.MovieFranchise;
 import com.experis.moviedb.Services.MovieFranchiseService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class MovieFranchiseController {
     @Autowired
     MovieFranchiseService service;
 
+    @Operation(summary = "Get all franchises")
     @GetMapping("")
     private ResponseEntity<List<MovieFranchise>> getFranchises() {
         List<MovieFranchise> franchises = service.findAll();
@@ -32,6 +34,7 @@ public class MovieFranchiseController {
                 .build();
     }
 
+    @Operation(summary = "Get a franchise by Id")
     @GetMapping("/{id}")
     private ResponseEntity<MovieFranchise> getMovieFranchise(@PathVariable("id") Long id) {
         Optional<MovieFranchise> franchise =  service.getFranchiseById(id);
@@ -44,6 +47,7 @@ public class MovieFranchiseController {
                 .build();
     }
 
+    @Operation(summary = "Create a new franchise")
     @PostMapping("")
     private ResponseEntity<MovieFranchise> createFranchise(@RequestBody MovieFranchise franchise) {
         try {
@@ -59,6 +63,7 @@ public class MovieFranchiseController {
         }
     }
 
+    @Operation(summary = "Update a franchise by Id")
     @PutMapping ("/{id}")
     private ResponseEntity<MovieFranchise> updateFranchise(@RequestBody MovieFranchise updateFranchise, @PathVariable("id") Long id) {
         try {
@@ -75,6 +80,7 @@ public class MovieFranchiseController {
         }
     }
 
+    @Operation(summary = "Delete a franchise")
     @DeleteMapping("/{id}")
     private ResponseEntity<Boolean> deleteFranchise(@PathVariable("id") Long id) {
         try {
@@ -90,6 +96,7 @@ public class MovieFranchiseController {
         }
     }
 
+    @Operation(summary = "Get all the movies in a franchise")
     @GetMapping("/{id}/movies")
     private ResponseEntity<List<Movie>> getFranchiseMovies(@PathVariable("id") Long id) {
         MovieFranchise franchise = service.getFranchiseById(id).get();
@@ -103,6 +110,7 @@ public class MovieFranchiseController {
                 .build();
     }
 
+    @Operation(summary = "Get all the characters in a franchise")
     @GetMapping("/{id}/characters")
     private ResponseEntity<List<MovieCharacter>> getFranchiseCharacters(@PathVariable("id") Long id) {
         MovieFranchise franchise = service.getFranchiseById(id).get();
@@ -116,6 +124,7 @@ public class MovieFranchiseController {
                 .build();
     }
 
+    @Operation(summary = "Update the movies in a franchise by movie Ids")
     @PutMapping("/{id}/movies")
     private ResponseEntity<MovieFranchise> updateMovies(@PathVariable("id") Long id, @RequestBody Long[] ids){
         MovieFranchise franchise = service.getFranchiseById(id).get();

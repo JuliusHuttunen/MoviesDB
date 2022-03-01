@@ -2,6 +2,7 @@ package com.experis.moviedb.Controllers;
 
 import com.experis.moviedb.Models.MovieCharacter;
 import com.experis.moviedb.Services.MovieCharacterService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class MovieCharacterController {
     @Autowired
     MovieCharacterService service = new MovieCharacterService();
 
+    @Operation(summary = "Get all characters")
     @GetMapping("")
     private ResponseEntity<List<MovieCharacter>> getCharacters() {
         List<MovieCharacter> characters = service.findAll();
@@ -30,6 +32,7 @@ public class MovieCharacterController {
                 .build();
     }
 
+    @Operation(summary = "Get a character by Id")
     @GetMapping("/{id}")
     private ResponseEntity<MovieCharacter> getMovieCharacter(@PathVariable("id") Long id) {
         Optional<MovieCharacter> character = service.getCharacterById(id);
@@ -42,6 +45,7 @@ public class MovieCharacterController {
                 .build();
     }
 
+    @Operation(summary = "Create a new character")
     @PostMapping("")
     private ResponseEntity<MovieCharacter> createCharacter(@RequestBody MovieCharacter character) {
         try {
@@ -57,6 +61,7 @@ public class MovieCharacterController {
         }
     }
 
+    @Operation(summary = "Update a character by Id")
     @PutMapping ("/{id}")
     private ResponseEntity<MovieCharacter> updateCharacter(@RequestBody MovieCharacter updateCharacter, @PathVariable("id") Long id) {
         try {
@@ -73,6 +78,7 @@ public class MovieCharacterController {
         }
     }
 
+    @Operation(summary = "Delete a character")
     @DeleteMapping("/{id}")
     private ResponseEntity<Boolean> deleteCharacter(@PathVariable("id") Long id) {
         try {
