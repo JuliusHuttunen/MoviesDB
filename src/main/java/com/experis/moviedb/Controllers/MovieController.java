@@ -27,7 +27,6 @@ public class MovieController {
                     .body(movies);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .header("Message", "No movies found!")
                 .build();
     }
 
@@ -40,32 +39,52 @@ public class MovieController {
                     .body(movie.get());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .header("Message", "Movie not found!")
                 .build();
     }
 
     @PostMapping("")
     private ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
-        service.saveMovie(movie);
-        return ResponseEntity
-                .ok()
-                .body(movie);
+        try {
+            Movie result = service.saveMovie(movie);
+            return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(result);
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
     @PutMapping ("/{id}")
     private ResponseEntity<Movie> updateMovie(@RequestBody Movie updateMovie, @PathVariable("id") Long id) {
-        updateMovie.setId(id);
-        service.updateMovie(updateMovie);
-        return ResponseEntity
-                .ok()
-                .body(updateMovie);
+        try {
+            updateMovie.setId(id);
+            Movie result = service.saveMovie(updateMovie);
+            return ResponseEntity
+                    .ok()
+                    .body(result);
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
     @DeleteMapping("/{id}")
     private ResponseEntity<Boolean> deleteMovie(@PathVariable("id") Long id) {
-        boolean result = service.deleteMovie(id);
-        return ResponseEntity
-                .ok()
-                .body(result);
+        try {
+            service.deleteMovie(id);
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .build();
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 }

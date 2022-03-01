@@ -27,7 +27,6 @@ public class MovieCharacterController {
                     .body(characters);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .header("Message", "No characters found!")
                 .build();
     }
 
@@ -40,32 +39,52 @@ public class MovieCharacterController {
                     .body(character.get());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .header("Message", "Character not found!")
                 .build();
     }
 
     @PostMapping("")
     private ResponseEntity<MovieCharacter> createCharacter(@RequestBody MovieCharacter character) {
-        service.saveCharacter(character);
-        return ResponseEntity
-                .ok()
-                .body(character);
+        try {
+            MovieCharacter result = service.saveCharacter(character);
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(result);
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
     @PutMapping ("/{id}")
     private ResponseEntity<MovieCharacter> updateCharacter(@RequestBody MovieCharacter updateCharacter, @PathVariable("id") Long id) {
-        updateCharacter.setId(id);
-        service.updateCharacter(updateCharacter);
-        return ResponseEntity
-                .ok()
-                .body(updateCharacter);
+        try {
+            updateCharacter.setId(id);
+            MovieCharacter result = service.updateCharacter(updateCharacter);
+            return ResponseEntity
+                    .ok()
+                    .body(result);
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
     @DeleteMapping("/{id}")
     private ResponseEntity<Boolean> deleteCharacter(@PathVariable("id") Long id) {
-        boolean result = service.deleteCharacter(id);
-        return ResponseEntity
-                .ok()
-                .body(result);
+        try {
+            service.deleteCharacter(id);
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .build();
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 }
