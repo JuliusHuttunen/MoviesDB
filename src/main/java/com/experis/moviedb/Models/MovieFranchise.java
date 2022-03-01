@@ -15,10 +15,9 @@ public class MovieFranchise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 40)
     private String name;
 
-    @Column
     private String description;
 
     @JsonGetter("movies")

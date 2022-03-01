@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,13 +17,13 @@ public class Movie {
     @Column
     private String title;
 
-    @Column
+    @Column(length = 20)
     private String genre;
 
-    @Column
+    @Column(length = 4)
     private int releaseYear;
 
-    @Column
+    @Column(length = 50)
     private String director;
 
     @Column
@@ -35,7 +34,10 @@ public class Movie {
 
     @JsonGetter("franchise")
     public String franchise() {
-        return "/api/franchises/" + franchise.getId();
+        if(franchise != null) {
+            return "/api/franchises/" + franchise.getId();
+        }
+        return null;
     }
 
     @ManyToOne

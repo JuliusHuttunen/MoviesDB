@@ -14,13 +14,13 @@ public class MovieCharacter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 40)
     private String name;
 
-    @Column
+    @Column(length = 40)
     private String alias;
 
-    @Column
+    @Column(length = 10)
     private String gender;
 
     @Column
