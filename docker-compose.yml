@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://ec2-52-208-185-143.eu-west-1.compute.amazonaws.com/d90cmueetj650q?sslmode=require&user=nrclyzbcwvqhhd&password=8ad0a40ae12009677ed7c7af74b92e02952a41657fe41ed0df9093ed7c014c41
+    ports:
+      - "8080:8080"
+
+  keycloak-db:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_DB: keycloak
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - keycloakdata:/var/lib/postgresql/data/pgdata
+
+  keycloak:
+    image: jboss/keycloak
+    restart: always
+    environment:
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      DB_VENDOR: postgres
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+      DB_ADDR: keycloak-db
+    ports:
+      - '127.0.0.1:8083:8080'
+
+volumes:
+  postgresdata: {}
+  keycloakdata: {}
+
+
