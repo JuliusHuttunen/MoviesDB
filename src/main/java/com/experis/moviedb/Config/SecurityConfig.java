@@ -1,5 +1,6 @@
 package com.experis.moviedb.Config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,8 +13,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors(cors -> {})
                 .authorizeRequests(authorize -> {
                     authorize
-                            .antMatchers( "/api-docs/**", "/swagger-ui/", "/swagger-ui/*", "/swagger-ui/**").permitAll()
-                            .antMatchers("/api/**").permitAll()
+                            .antMatchers( "/api-docs/**", "/api/docs/**", "/api/swagger-ui/**").permitAll()
+                            .antMatchers(HttpMethod.GET, "/api/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .oauth2ResourceServer(oauth2 -> {

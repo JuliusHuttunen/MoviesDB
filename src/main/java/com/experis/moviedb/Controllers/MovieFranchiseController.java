@@ -5,6 +5,7 @@ import com.experis.moviedb.Models.MovieCharacter;
 import com.experis.moviedb.Models.MovieFranchise;
 import com.experis.moviedb.Services.MovieFranchiseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,7 @@ public class MovieFranchiseController {
                 .build();
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Create a new franchise")
     @PostMapping("")
     private ResponseEntity<MovieFranchise> createFranchise(@RequestBody MovieFranchise franchise) {
@@ -63,6 +65,7 @@ public class MovieFranchiseController {
         }
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Update a franchise by Id")
     @PutMapping ("/{id}")
     private ResponseEntity<MovieFranchise> updateFranchise(@RequestBody MovieFranchise updateFranchise, @PathVariable("id") Long id) {
@@ -80,6 +83,7 @@ public class MovieFranchiseController {
         }
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Delete a franchise")
     @DeleteMapping("/{id}")
     private ResponseEntity<Boolean> deleteFranchise(@PathVariable("id") Long id) {
@@ -124,6 +128,7 @@ public class MovieFranchiseController {
                 .build();
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Update the movies in a franchise by movie Ids")
     @PutMapping("/{id}/movies")
     private ResponseEntity<MovieFranchise> updateMovies(@PathVariable("id") Long id, @RequestBody Long[] ids){
