@@ -3,6 +3,7 @@ package com.experis.moviedb.Controllers;
 import com.experis.moviedb.Models.MovieCharacter;
 import com.experis.moviedb.Services.MovieCharacterService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ public class MovieCharacterController {
                 .build();
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Create a new character")
     @PostMapping("")
     private ResponseEntity<MovieCharacter> createCharacter(@RequestBody MovieCharacter character) {
@@ -61,6 +63,7 @@ public class MovieCharacterController {
         }
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Update a character by Id")
     @PutMapping ("/{id}")
     private ResponseEntity<MovieCharacter> updateCharacter(@RequestBody MovieCharacter updateCharacter, @PathVariable("id") Long id) {
@@ -78,6 +81,7 @@ public class MovieCharacterController {
         }
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Delete a character")
     @DeleteMapping("/{id}")
     private ResponseEntity<Boolean> deleteCharacter(@PathVariable("id") Long id) {
