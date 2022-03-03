@@ -6,7 +6,6 @@ Spring Boot and Heroku PostgreSQL powered movie database app with Keycloak prote
 - [Install](#install)
 - [Usage](#usage)
 - [API](#api)
-- [Examples](#examples)
 - [Live](#live)
 - [Keycloak](#keycloak)
 - [Maintainers](#maintainers)
@@ -23,7 +22,7 @@ git clone https://github.com/JuliusHuttunen/MoviesDB.git
 
 ## Usage
 
-Run the project with a compatible IDE of your choice. May need some work to get it running depending on your setup.
+Run the project with a compatible IDE of your choice. May need some work to get it running depending on your setup. Alternatively you can run it as a docker container.
 
 ## API
 
