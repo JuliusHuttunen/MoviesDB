@@ -30,8 +30,13 @@ public class MovieFranchise {
         return null;
     }
 
-    @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Set<Movie> movies;
+
+    @PreRemove
+    private void preRemove() {
+        movies.forEach( movie -> movie.setFranchise(null));
+    }
 
     public MovieFranchise(){}
 
